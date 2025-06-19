@@ -1,2 +1,2 @@
 // config.js
-const API_BASE = "https://your-api.vercel.app"; // or localhost:5000 in dev
+const API_BASE = "https://disaster-response-platform-qhz3.onrender.com";

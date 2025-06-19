@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Disaster Table</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    table { font-size: 14px; }
+    th, td { vertical-align: middle; }
+  </style>
+</head>
+<body class="p-4">
+  <h2>📋 All Reported Disasters</h2>
+
+  <input class="form-control w-50 mb-3" placeholder="Search by tag or title..." oninput="filterTable(this.value)" />
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped" id="disasterTable">
+      <thead class="table-dark">
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Location</th>
+          <th>Tags</th>
+          <th>Owner</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="config.js"></script>
+  <script>
+    let rawData = [];
+
+    async function loadDisasters() {
+      try {
+        const res = await fetch(`${API_BASE}/disasters`);
+        const data = await res.json();
+        rawData = data;
+        renderTable(data);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        document.querySelector("#disasterTable tbody").innerHTML =
+          `<tr><td colspan="6" class="text-danger">Error loading data</td></tr>`;
+      }
+    }
+
+    function renderTable(data) {
+      const tbody = document.querySelector("#disasterTable tbody");
+      tbody.innerHTML = "";
+
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center">No disasters found.</td></tr>`;
+        return;
+      }
+
+      data.forEach(d => {
+        const row = `
+          <tr>
+            <td>${d.title}</td>
+            <td>${d.description}</td>
+            <td>${d.location_name}</td>
+            <td>${d.tags?.join(', ')}</td>
+            <td>${d.owner_id}</td>
+            <td>${new Date(d.created_at).toLocaleString()}</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function filterTable(keyword) {
+      keyword = keyword.toLowerCase();
+      const filtered = rawData.filter(d =>
+        d.title.toLowerCase().includes(keyword) ||
+        d.tags?.some(tag => tag.toLowerCase().includes(keyword))
+      );
+      renderTable(filtered);
+    }
+
+    loadDisasters();
+  </script>
+</body>
+</html>
