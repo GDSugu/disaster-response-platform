@@ -18,7 +18,7 @@
 
     <div>
       <a href="disasters-table.html" class="btn btn-outline-secondary me-2">📋 View All in Table</a>
-      <a href="create.html" class="btn btn-success">+ New Disaster</a>
+      <a href="/create" class="btn btn-success">+ New Disaster</a>
     </div>
   </div>
 
@@ -42,7 +42,7 @@
               <h5>${d.title}</h5>
               <p>${d.description}</p>
               <small>📍 ${d.location_name} — 🏷️ ${d.tags.join(', ')}</small><br/>
-              <a href="verify.html?id=${d.id}" class="btn btn-sm btn-warning mt-2">Verify Image</a>
+              <a href="/verify?id=${d.id}" class="btn btn-sm btn-warning mt-2">Verify Image</a>
               <a href="#" onclick="viewSocial(${d.id})" class="btn btn-sm btn-info mt-2">Social Media</a>
             </div>
           </div>`;

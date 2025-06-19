@@ -13,7 +13,9 @@
     <textarea class="form-control mb-2" placeholder="Description" id="desc" required></textarea>
     <input class="form-control mb-2" placeholder="Tags (comma separated)" id="tags" />
     <button class="btn btn-primary">Submit</button>
-    <a href="index.html" class="btn btn-secondary">Back</a>
+    <a href="/" class="btn btn-secondary">Back</a>
+    <a href="/" class="btn btn-secondary">Back</a>
+
   </form>
 
   <script src="config.js"></script>
@@ -34,7 +36,7 @@
       });
       if (res.ok) {
         alert("✅ Disaster reported!");
-        window.location.href = "index.html";
+        window.location.href = "/";
       } else {
         alert("❌ Error creating disaster.");
       }
